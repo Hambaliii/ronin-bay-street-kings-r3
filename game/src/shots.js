@@ -114,7 +114,7 @@ export function setupShot(G, name) {
     });
     castFig(G, 'ren', 0, 325, Math.PI);
     setObjective('Lineup — twelve silhouettes of Kairyu Bay');
-    setCam(G, 0, 2.6, 319, 0, 1.2, 330);
+    setCam(G, 5, 3.4, 313, 0, 1.2, 330);
   } else {
     setObjective('RONIN BAY — STREET KINGS');
     setCam(G, -466, 3.2, 372, -450, 1.2, 389);

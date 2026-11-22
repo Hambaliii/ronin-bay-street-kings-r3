@@ -72,11 +72,7 @@ export function makeCarMesh(spec, colorHex, opts = {}) {
       const narrow = (spec.id === 'taiyo' || spec.id === 'hoshi7' || spec.id === 'hero-supra') ? 0.82 : 0.9;
       const cab = box(W * narrow, st.cabinH + 0.16, st.cabinLen, glassMat, 0, baseY + lowerH / 2 + (st.cabinH + 0.16) / 2 - 0.05, cabZ, 0.1); grp.add(cab);
       const slope = box(W * (narrow + 0.04), 0.09, st.cabinLen * 0.75, bodyMat, 0, baseY + lowerH / 2 + 0.12, cabZ - st.cabinLen * 0.55, 0.42); grp.add(slope);
-      if (spec.id === 'hoshi7' || spec.id === 'taiyo' || spec.id === 'hero-supra') {
-        const roofCurve = new THREE.Mesh(new THREE.CylinderGeometry(W * narrow * 0.5, W * narrow * 0.5, st.cabinLen * 0.92, 12, 1, false, 0, Math.PI), glassMat);
-        roofCurve.rotation.z = Math.PI / 2; roofCurve.rotation.y = Math.PI / 2;
-        roofCurve.position.set(0, baseY + lowerH / 2 + st.cabinH + 0.1, cabZ); roofCurve.castShadow = true; grp.add(roofCurve);
-      }
+      grp.add(box(W * (narrow + 0.04), 0.08, st.cabinLen * 0.8, bodyMat, 0, baseY + lowerH / 2 + st.cabinH + 0.16, cabZ));
     } else { // notch
       const cab = box(W * 0.9, st.cabinH + 0.18, st.cabinLen, glassMat, 0, baseY + lowerH / 2 + (st.cabinH + 0.18) / 2 - 0.04, cabZ); grp.add(cab);
       const roof = box(W * 0.94, 0.09, st.cabinLen * 0.9, bodyMat, 0, baseY + lowerH / 2 + st.cabinH + 0.16, cabZ); grp.add(roof);
@@ -84,7 +80,7 @@ export function makeCarMesh(spec, colorHex, opts = {}) {
     }
     if (spec.id === 'kei') {
       const cab = box(W * 0.96, st.cabinH + 0.3, L * 0.72, glassMat, 0, baseY + 0.55, -0.1); grp.add(cab);
-      grp.add(box(W, 0.09, L * 0.76, bodyMat, 0, baseY + 0.55 + st.cabinH + 0.32, -0.1));
+      grp.add(box(W, 0.09, L * 0.76, bodyMat, 0, baseY + 0.55 + (st.cabinH + 0.3) / 2 + 0.05, -0.1));
     }
     if (spec.id === 'kaze' || spec.id === 'hero-gtr') {
       grp.add(box(W * 0.5, 0.16, 0.5, darkMat, 0, baseY + 0.42, L / 2 - 0.28)); // grille panel
@@ -129,20 +125,21 @@ export function makeCarMesh(spec, colorHex, opts = {}) {
     for (const sx of [-W * 0.35, W * 0.35]) grp.add(box(0.3, 0.16, 0.06, tailMat, sx, wr + 0.5, -L / 2 - 0.06));
   }
   // Wings
-  const wingY = baseY + H * 0.5 + st.cabinH + 0.1, wingZ = -L / 2 + 0.25;
+  const trunkY = wr + H * 0.55;
+  const wingY = trunkY + 0.30, wingZ = -L / 2 + 0.25;
   if (st.wing === 'small') {
-    for (const sx of [-W * 0.3, W * 0.3]) grp.add(box(0.08, 0.22, 0.08, darkMat, sx, wingY - 0.1, wingZ));
+    for (const sx of [-W * 0.3, W * 0.3]) grp.add(box(0.08, 0.26, 0.08, darkMat, sx, wingY - 0.13, wingZ));
     grp.add(box(W * 0.82, 0.07, 0.36, bodyMat, 0, wingY, wingZ));
   } else if (st.wing === 'big') {
-    for (const sx of [-W * 0.34, W * 0.34]) grp.add(box(0.09, 0.42, 0.09, darkMat, sx, wingY - 0.12, wingZ));
-    grp.add(box(W * 1.02, 0.08, 0.44, darkMat, 0, wingY + 0.1, wingZ));
+    for (const sx of [-W * 0.34, W * 0.34]) grp.add(box(0.09, 0.36, 0.09, darkMat, sx, wingY - 0.16, wingZ));
+    grp.add(box(W * 1.02, 0.08, 0.44, darkMat, 0, wingY + 0.04, wingZ));
   } else if (st.wing === 'ducktail') {
     grp.add(box(W * 0.9, 0.09, 0.4, bodyMat, 0, tailY + 0.22, -L / 2 + 0.12, -0.5));
   } else if (st.wing === 'curved') {
-    const topY = wingY + 0.28;
+    const topY = wingY + 0.14;
     for (const sx of [-W * 0.3, W * 0.3]) {
-      grp.add(box(0.09, 0.3, 0.09, darkMat, sx, wingY + 0.02, wingZ + 0.08, 0.25));
-      grp.add(box(0.09, 0.3, 0.09, darkMat, sx, wingY + 0.22, wingZ - 0.08, 0.25));
+      grp.add(box(0.09, 0.3, 0.09, darkMat, sx, wingY - 0.12, wingZ + 0.08, 0.25));
+      grp.add(box(0.09, 0.3, 0.09, darkMat, sx, wingY + 0.06, wingZ - 0.08, 0.25));
     }
     grp.add(box(W * 0.62, 0.07, 0.4, darkMat, 0, topY, wingZ));
     grp.add(box(W * 0.22, 0.07, 0.36, darkMat, -W * 0.42, topY - 0.05, wingZ, 0)); grp.children[grp.children.length - 1].rotation.z = 0.18;
@@ -155,7 +152,7 @@ export function makeCarMesh(spec, colorHex, opts = {}) {
     grp.add(box(W + 0.03, H * 0.2, L + 0.03, bandMat, 0, baseY + 0.08, 0));
   }
   if (liv === 'taxi' || spec.id === 'taxi') {
-    const sign = box(0.7, 0.28, 0.36, new THREE.MeshBasicMaterial({ color: 0xffd23f }), 0, baseY + H * 0.5 + st.cabinH + 0.32, -st.cabinBack); grp.add(sign);
+    const sign = box(0.7, 0.28, 0.36, new THREE.MeshBasicMaterial({ color: 0xffd23f }), 0, trunkY + st.cabinH + 0.30, -st.cabinBack); grp.add(sign);
   }
   if (liv === 'police' || spec.cls === 'police') {
     const doorTex = textTex('RBPD', '#ffffff', '#101828');
@@ -232,7 +229,7 @@ export function makeCarMesh(spec, colorHex, opts = {}) {
   const glowColor = opts.glowColor || (liv === 'police' ? 0x2255ff : (spec.cls === 'coupe' ? 0x00f5d4 : 0xff2e88));
   if (opts.glow) {
     const ug = new THREE.Mesh(new THREE.PlaneGeometry(W + 1.1, L + 1.1),
-      new THREE.MeshBasicMaterial({ color: glowColor, transparent: true, opacity: 0.4, blending: THREE.AdditiveBlending, depthWrite: false }));
+      new THREE.MeshBasicMaterial({ color: glowColor, transparent: true, opacity: 0.24, blending: THREE.AdditiveBlending, depthWrite: false }));
     ug.rotation.x = -Math.PI / 2; ug.position.y = 0.12; grp.add(ug);
     const gs = glowSprite(glowColor, Math.max(W, L) * 1.15); gs.position.y = 0.35; gs.material.opacity = 0.35; grp.add(gs);
     grp.userData.glowSprite = gs;
