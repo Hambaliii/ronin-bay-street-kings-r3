@@ -311,11 +311,11 @@ function buildTrees(G) {
       px += lean * 1.4; py += 1.4;
       seg.position.set(px, py, 0); seg.rotation.z = -lean; seg.castShadow = true; grp.add(seg);
     }
-    for (let f = 0; f < 6; f++) {
-      const fr = new THREE.Mesh(new THREE.PlaneGeometry(0.7, 3.4), frondMat);
-      const a = (f / 6) * Math.PI * 2;
-      fr.position.set(px + Math.cos(a) * 1.2, py + 0.7, Math.sin(a) * 1.2);
-      fr.rotation.set(Math.PI / 3.2, a, 0, 'YXZ'); grp.add(fr);
+    for (let f = 0; f < 8; f++) {
+      const fr = new THREE.Mesh(new THREE.PlaneGeometry(0.45, 2.0), frondMat);
+      const a = (f / 8) * Math.PI * 2;
+      fr.position.set(px + Math.cos(a) * 0.7, py + 0.7, Math.sin(a) * 0.7);
+      fr.rotation.set(1.15, a, 0, 'YXZ'); grp.add(fr);
     }
     grp.position.set(x, gy, z); scene.add(grp);
   }
@@ -453,13 +453,24 @@ function buildHarbor(G) {
 }
 function buildHQ(G) {
   const scene = G.scene, gy = groundH(-420, 420);
-  const hq = new THREE.Mesh(new THREE.BoxGeometry(46, 14, 30), new THREE.MeshLambertMaterial({ color: 0x35455e }));
+  const hq = new THREE.Mesh(new THREE.BoxGeometry(46, 14, 30), new THREE.MeshLambertMaterial({ color: 0x46586e }));
   hq.position.set(-420, gy + 7, 428); hq.castShadow = true; scene.add(hq);
   const sign = new THREE.Mesh(new THREE.PlaneGeometry(38, 7), new THREE.MeshBasicMaterial({ map: signTex('RONIN KAI', '#0d1526', '#ff2e88') }));
   sign.position.set(-420, gy + 10.5, 412.8); sign.rotation.y = Math.PI; scene.add(sign);
-  const gl = glowSprite(0xff2e88, 34); gl.position.set(-420, gy + 10.5, 410); scene.add(gl);
-  const roof = new THREE.Mesh(new THREE.BoxGeometry(48, 1, 32), new THREE.MeshLambertMaterial({ color: 0x232f42 }));
+  const gl = glowSprite(0xff2e88, 17); gl.position.set(-420, gy + 10.5, 410); scene.add(gl);
+  const roof = new THREE.Mesh(new THREE.BoxGeometry(48, 1, 32), new THREE.MeshLambertMaterial({ color: 0x2c3a4e }));
   roof.position.set(-420, gy + 14.4, 428); scene.add(roof);
+  // Lit window strips on the lot-facing wall (z = 413 face) — warm emissive
+  // material matching the city-building window approach.
+  const winMat = new THREE.MeshLambertMaterial({ color: 0xffd98a, emissive: 0xffc37a, emissiveIntensity: 0.9 });
+  for (const wy of [3.2, 6.4]) {
+    for (let wi = 0; wi < 5; wi++) {
+      const win = new THREE.Mesh(new THREE.PlaneGeometry(5.5, 1.4), winMat);
+      win.position.set(-436 + wi * 8, gy + wy, 412.7); win.rotation.y = Math.PI; scene.add(win);
+    }
+  }
+  const band = new THREE.Mesh(new THREE.BoxGeometry(46.4, 1.1, 30.4), new THREE.MeshLambertMaterial({ color: 0x2c3a4e }));
+  band.position.set(-420, gy + 8.6, 428); scene.add(band);
   G.addCollider(-420, 428, 23, 15, 14);
   // Meet lot painted lines
   const lineMat = new THREE.MeshBasicMaterial({ color: 0xffffff });

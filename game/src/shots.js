@@ -35,9 +35,9 @@ export function setupShot(G, name) {
   if (G.player) G.player.mesh.visible = false;
 
   if (name === 'city') {
-    const taiyo = spawnVehicle(G, 'taiyo', -452, 388, 0.7, { color: 0xe8e8ec, driver: 'parked' });
-    G.car = taiyo;
-    castFig(G, 'ren', -455.5, 391.5, 2.6);
+    const heroCar = spawnVehicle(G, 'hero-supra', -452, 388, 0.7, { color: 0xff6a00, driver: 'parked' });
+    G.car = heroCar;
+    castFig(G, 'ren', -454.8, 390.8, 2.6);
     castFig(G, 'mika', -447, 383, -0.6);
     castFig(G, 'jun', -444, 390, -1.4);
     spawnVehicle(G, 'hachi', -436, 384, Math.PI / 2, { color: 0xf2f2f2, driver: 'parked' });
@@ -51,7 +51,7 @@ export function setupShot(G, name) {
       const line = br.querySelector('.line'); if (line) line.textContent = MISSIONS[0].brief.split('\n')[0].replace(/^Mika:\s*/, '');
       br.classList.add('show');
     }
-    setCam(G, -466, 3.2, 372, -450, 1.2, 389);
+    setCam(G, -457, 2.2, 383, -452, 1.2, 388);
   } else if (name === 'meet') {
     const ids = ['hachi', 'sora15', 'hoshi7', 'taiyo', 'kaze', 'hero-supra', 'hero-gtr'];
     const glows = [0xff2e88, 0x00f5d4, 0xffe95a, 0x7b2fff, 0xff8c42, 0x19b34a, 0x4f8cff];
@@ -72,7 +72,7 @@ export function setupShot(G, name) {
       const pEl = document.getElementById('cardPortrait'); if (pEl) pEl.textContent = 'A';
       card.classList.add('show');
     }
-    setCam(G, 0, 3.0, 296, 0, 1.0, 330);
+    setCam(G, 8, 2.4, 320, 0, 1.0, 330);
   } else if (name === 'chase') {
     const hero = spawnVehicle(G, 'hero-supra', 60, -165, Math.PI / 2, { driver: 'parked', driverVisual: 'ren', glow: true, glowColor: 0xff8c42 });
     hero.speed = 30; G.car = hero;
@@ -99,12 +99,12 @@ export function setupShot(G, name) {
     G.scene.add(heli);
     G.wanted = 5; G.speedKmh = 132;
     setObjective('Escape the RBPD — lose the heat!');
-    setCam(G, 28, 5.5, -138, 62, 1, -165);
+    setCam(G, 36, 5.5, -140, 62, 1, -165);
   } else if (name === 'hero') {
     spawnVehicle(G, 'hero-gtr', 430, 648, -0.5, { driver: 'parked', glow: true, glowColor: 0x4f8cff });
-    castFig(G, 'ren', 426.5, 645, 1.1);
+    castFig(G, 'ren', 428, 646.3, 1.1);
     setObjective('Bayside Ghost — the final pink slip awaits');
-    setCam(G, 416, 2.6, 630, 431, 1.1, 648);
+    setCam(G, 428.6, 1.6, 643.2, 431, 1.1, 648);
   } else if (name === 'lineup') {
     const ids = ['kei', 'hachi', 'roadster', 'sora15', 'hoshi7', 'taiyo', 'kaze', 'sedan', 'suv', 'taxi', 'police', 'truck'];
     const cols = [0xff6b9d, 0xf2f2f2, 0xb02020, 0xb8bcc4, 0xffc93c, 0xe8e8ec, 0x2a2e36, 0x3a6ea8, 0x37c978, 0xffc61a, 0x101216, 0xeef1f4];
@@ -114,7 +114,7 @@ export function setupShot(G, name) {
     });
     castFig(G, 'ren', 0, 325, Math.PI);
     setObjective('Lineup — twelve silhouettes of Kairyu Bay');
-    setCam(G, 0, 4.5, 292, 0, 1.2, 330);
+    setCam(G, 0, 2.6, 319, 0, 1.2, 330);
   } else {
     setObjective('RONIN BAY — STREET KINGS');
     setCam(G, -466, 3.2, 372, -450, 1.2, 389);
