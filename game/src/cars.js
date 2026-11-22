@@ -2,7 +2,7 @@
 import * as THREE from 'three';
 import { CARS, CAST } from './config.js';
 import { groundH, glowSprite } from './world.js';
-import { rnd, rr, ri, pick } from './random.js';
+import { rnd, rr, ri, pick, chance } from './random.js';
 
 const TRAFFIC_COLORS = [0xe8e8ec, 0xc0c6ce, 0x3a6ea8, 0xb02020, 0x37c978, 0xffc93c, 0x7a4fd0, 0x22262e, 0xff8c42, 0x2fb9a8];
 function specById(id) { return CARS.find(c => c.id === id) || CARS[0]; }
